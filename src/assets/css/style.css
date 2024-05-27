@@ -1,0 +1,252 @@
+/* ============================================ */
+
+/* ------ General Content ------*/
+
+*{
+    padding: 0;
+    margin: 0;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+body, html {
+    overflow-x: hidden;
+}
+
+:root{
+    --font-color-white: #FFFFFF;
+    --font-color-black: #000000;
+    --font-color-grey: #BDBDBD;
+}
+
+/* ------ End General Content ------*/
+
+/* ============================================ */
+
+
+/* ============================================ */
+
+/* ------ Side Bar Content ------*/
+
+.company-name{
+    margin-top: 6%;
+    margin-bottom: 12%;
+}
+
+/* ------ End Side Bar Content ------*/
+
+
+/* ------ Navbar Content ------*/
+
+.navbar{
+    padding: 10px 0;
+    height: 90px;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+
+    .navbar-brand{
+        color: var(--font-color-white);
+        font-weight: 600;
+        font-size: 24px;
+    }
+
+    .nav-link{
+        font-size: 16px;
+        margin-left: 40px;
+        color: var(--font-color-white);
+        font-weight: 500;
+        text-decoration: none;
+        list-style: none;
+        transition: background-color 0.3s ease-in-out
+    }
+
+    .btn-auth{
+        background-color: transparent;
+        border: 1px solid #FFFFFF;
+        font-weight: 500;
+        width: 10%;
+        color: var(--font-color-white);
+    }
+
+}
+
+.navbar-scrolled {
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+
+    .nav-link-scrolled{
+        font-size: 16px;
+        margin-left: 40px;
+        color: var(--font-color-black);
+        font-weight: 500;
+        text-decoration: none;
+        list-style: none;
+    }
+
+    .navbar-brand{
+        color: var(--font-color-black);
+        font-weight: 600;
+        font-size: 24px;
+    }
+
+    .btn-auth-scrolled{
+        color: var(--font-color-black);
+        background-color: transparent;
+        border: 1px solid #000000;
+        font-weight: 500;
+        width: 10%;
+    }
+}
+
+/* ------ End Navbar Content ------*/
+
+/* ============================================ */
+
+
+/* ============================================ */
+
+/* ------ Home Main Content ------*/
+
+#home-main-content{
+    position: relative;
+    overflow: hidden;
+    padding: 18% 0;
+
+    .home-bg{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-image: url('../images/background/home-bg.png');
+        background-size: cover;
+    }
+
+    h1{
+        font-size: 32px;
+        color: var(--font-color-white);
+        font-weight: 600;
+    }
+
+    p{
+        margin-top: 4%;
+        color: var(--font-color-white);
+    }
+
+    .btn-river-mapping{
+        margin-top: 4%;
+        color: var(--font-color-white);
+        background-color: transparent;
+        border: 1px solid #FFFFFF;
+    }
+}
+
+/* ------ End Home Main Content ------*/
+
+/* ============================================ */
+
+
+/* ============================================ */
+
+/* ------ Map Content ------*/
+
+#map-content{
+    margin-top: 4%;
+
+    h1{
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--font-color-black);
+    }
+
+    .row:nth-child(2){
+        margin-top: 2%;
+        margin-bottom: 6%;
+    }
+}
+
+/* ------ End Map Content ------*/
+
+/* ============================================ */
+
+
+/* ============================================ */
+
+/* ------ Login Content ------*/
+
+#login-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .card{
+        height: 100%;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-bg-content h1{
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--font-color-white);
+    }
+
+    .login-bg-content p{
+        color: var(--font-color-white);
+    }
+
+    .login-form-content{
+        padding: 2% 4%;
+    }
+
+    .login-form-content h1{
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--font-color-black);
+    }
+
+    .login-form-content p{
+        color: var(--font-color-grey);
+    }
+
+    .form-login{
+        margin-top: 15%;
+    }
+
+    .btn-login-page{
+        margin-top: 15%;
+        background-color: #2A78EE;
+        width: 100%;
+    }
+
+    .password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    .password-input {
+        width: 100%;
+        padding-right: 40px; /* Space for the button */
+    }
+    
+    .toggle-button {
+        position: absolute;
+        right: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+}
+
+/* ------ End Login Content ------*/
+
+/* ============================================ */
