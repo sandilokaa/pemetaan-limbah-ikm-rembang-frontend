@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import {
     Container,
     Button,
@@ -6,9 +6,11 @@ import {
     Row,
     Col,
     Form,
-    Image,
-    InputGroup
+    Image
 } from "react-bootstrap";
+import { useSnackbar } from 'notistack';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import LoginBackground from "../../assets/images/background/login-bg.png";
 import OpenEyeIcon from "../../assets/images/icon/eye-open.png";
@@ -18,11 +20,64 @@ import "../../assets/css/style.css";
 
 const LoginAdmin = () => {
 
+    /* ================ Set Visibility Password ================ */
+
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
+    /* ================ End Set Visibility Password ================ */
+
+
+    /* ================ Function Login ================ */
+
+    const navigate = useNavigate();
+
+    const { enqueueSnackbar } = useSnackbar();
+
+    const emailField = useRef();
+    const passwordField = useRef();
+
+    const onLogin = async (e) => {
+
+        e.preventDefault();
+
+        try {
+
+            const adminToLoginPayload = {
+                email: emailField.current.value,
+                password: passwordField.current.value,
+            };
+
+
+            const adminLoginRequest = await axios.post(
+                `http://localhost:8080/api/v1/auth/login`,
+                adminToLoginPayload
+            );
+
+            const adminLoginResponse = adminLoginRequest.data;
+
+            enqueueSnackbar(adminLoginResponse.message, { variant: 'success', anchorOrigin: { vertical: 'top', horizontal: 'center' }, autoHideDuration: 2000 });
+
+            if (adminLoginResponse.status) {
+
+                localStorage.setItem("token", adminLoginResponse.data.token);
+
+                navigate("/dashboard");
+
+            }
+        } catch (err) {
+
+            enqueueSnackbar('Terdapat kesalahan', { variant: 'error', anchorOrigin: { vertical: 'top', horizontal: 'center' }, autoHideDuration: 2000 });
+
+        }
+
+    };
+
+    /* ================ Function Login ================ */
+
 
     return (
 
@@ -43,7 +98,7 @@ const LoginAdmin = () => {
                                             <Form className="form-login">
                                                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
                                                     <Form.Label style={{ fontWeight: '600' }}>Email</Form.Label>
-                                                    <Form.Control type="email" placeholder="mail@heylaw.id" />
+                                                    <Form.Control type="email" placeholder="mail@heylaw.id" style={{ height: '56px' }} ref={emailField} autoComplete="off"/>
                                                 </Form.Group>
                                                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                                                     <Form.Label style={{ fontWeight: '600' }}>Password</Form.Label>
@@ -52,18 +107,20 @@ const LoginAdmin = () => {
                                                             type={showPassword ? 'text' : 'password'}
                                                             placeholder="Min 8 characters"
                                                             className="password-input"
+                                                            style={{ height: '56px' }}
+                                                            ref={passwordField}
                                                         />
                                                         <button
                                                             type="button"
                                                             className="toggle-button"
                                                             onClick={togglePasswordVisibility}
                                                         >
-                                                            <Image src={showPassword ? OpenEyeIcon : ClosedEyeIcon} style={{height:'20px', width: '20px'}}/>
+                                                            <Image src={showPassword ? OpenEyeIcon : ClosedEyeIcon} style={{ height: '20px', width: '20px' }} />
                                                         </button>
                                                     </div>
                                                 </Form.Group>
                                             </Form>
-                                            <Button className="btn-login-page">Masuk</Button>
+                                            <Button onClick={onLogin} className="btn-login-page">Masuk</Button>
                                         </div>
                                     </Col>
                                 </Row>

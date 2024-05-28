@@ -1,0 +1,102 @@
+:root{
+    --font-color-white: #FFFFFF;
+    --font-color-black: #000000;
+    --font-color-grey: #BDBDBD;
+}
+
+
+@media only screen and (min-width : 320px) and (max-width : 480px) {
+
+
+    /* ============================================ */
+
+
+    /* ------ Navbar Content ------*/
+
+    .navbar{
+        height: 70px;
+        background-color: #FFFFFF;
+
+        .navbar-brand{
+            color: var(--font-color-black);
+        }
+
+        #basic-navbar-nav{
+            background-color: #FFFFFF;
+            padding: 4% 0;
+        }
+
+        .nav-link{
+            margin-left: 0;
+            color: var(--font-color-black);
+            background-color: #FFFFFF;
+        }
+
+        .btn-auth{
+            margin-top: 2%;
+            background-color: transparent;
+            border: 1px solid #000000;
+            font-weight: 500;
+            width: 30%;
+            color: var(--font-color-black);
+        }
+
+    }
+
+    .navbar-scrolled {
+        background-color: #FFFFFF;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+
+        .nav-link-scrolled{
+            margin-left: 0;
+        }
+
+        .btn-auth-scrolled{
+            width: 25%;
+        }
+    }
+
+    /* ------ End Navbar Content ------*/
+
+    /* ============================================ */
+
+
+    /* ============================================ */
+
+    /* ------ Home Main Content ------*/
+
+    #home-main-content{
+
+        h1{
+            margin-top: 12%;
+            font-size: 30px;
+        }
+    }
+
+    /* ------ End Home Main Content ------*/
+
+    /* ============================================ */
+
+
+    /* ============================================ */
+
+    /* ------ Map Content ------*/
+
+    #map-content{
+        margin-top: 12%;
+
+        h1{
+            font-size: 22px;
+        }
+
+        .row:nth-child(2){
+            margin-top: 4%;
+            margin-bottom: 8%;
+        }
+    }
+
+    /* ------ End Map Content ------*/
+
+    /* ============================================ */
+
+}

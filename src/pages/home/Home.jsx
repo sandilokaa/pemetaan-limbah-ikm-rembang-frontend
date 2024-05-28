@@ -10,6 +10,7 @@ import HomeLayout from "../../layouts/home/HomeLayout";
 import MapWrapped from "../../components/map/MapWrapped";
 
 import "../../assets/css/style.css";
+import "../../assets/css/responsive.css";
 
 const Home = () => {
 
