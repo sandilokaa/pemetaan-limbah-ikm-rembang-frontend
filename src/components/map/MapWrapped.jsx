@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
     Row,
-    Col
+    Col,
+    Image
 } from "react-bootstrap";
 import {
     MapContainer,
@@ -27,15 +28,12 @@ const MapWrapped = () => {
         try {
 
             const getDataRequest = await axios.get(
-                `http://localhost:8080/api/v1/rivers`,
-                {
-                    headers: {
-                        "Access-Control-Allow-Origin": "*"
-                    },
-                }
+                `http://localhost:8080/api/v1/rivers`
             );
 
             const getDataResponse = await getDataRequest.data.data.getedAllRivers;
+
+            console.log(getDataResponse);
 
             setRiverData(getDataResponse);
 
@@ -98,17 +96,12 @@ const MapWrapped = () => {
                         <div style={{ width: '205px' }}>
                             <Row className='p-0 m-0'>
                                 <Col xs={12} xl={12} className='p-0'>
-                                    <p>Foto Sungai</p>
+                                    <Image src={`http://localhost:8080/${river.picture}`} style={{ width: '100%', height: '120px', marginTop: '4%', borderRadius: '8px' }}/>
                                 </Col>
                             </Row>
                             <Row className='p-0 m-0' style={{ marginTop: '10%'}}>
                                 <Col xs={12} xl={12} className='p-0 mt-3'>
-                                    <p style={{ margin: 'auto 0', fontWeight: '600', fontSize: '20px' }}>{river.name}</p>
-                                </Col>
-                            </Row>
-                            <Row className='p-0 m-0'>
-                                <Col xs={12} xl={12} className='p-0 mt-3'>
-                                    <p className='text-muted' style={{ margin: 'auto 0' }}>Jl. Pemuda No 21 B</p>
+                                    <p style={{ margin: 'auto 0', fontWeight: '600', fontSize: '16px' }}>{river.name}</p>
                                 </Col>
                             </Row>
                             <Row className='p-0 m-0'>

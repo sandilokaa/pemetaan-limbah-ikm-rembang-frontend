@@ -89,7 +89,7 @@ const NavbarDashboard = () => {
     return isLoggedIn ? (
 
         <Container fluid style={{ padding: '0 4%' }}>
-            <Row style={{ height: '90px' }}>
+            <Row style={{ height: '80px' }}>
                 <Col xs={12} xl={12} className="d-flex justify-content-end">
                     <div className="d-flex align-items-center" style={{zIndex: '999'}}>
                         <Image src={AvatarProfile} style={{ marginRight: '10px', maxWidth: '50px' }} />

@@ -8,18 +8,70 @@ import {
     Menu,
     MenuItem
 } from 'react-pro-sidebar';
+import axios from 'axios';
 
 import DashboardIcon from "../../assets/images/icon/dashboard.png";
-import AddDataIcon from "../../assets/images/icon/add-data.png";
 import AprovalIcon from "../../assets/images/icon/aproval.png";
 
 import '../../assets/css/style.css';
 
 const MySideBar = () => {
 
+
+    /* ================ Get Current User ================ */
+
+    const navigate = useNavigate();
+
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [admin, setAdmin] = useState({});
+    const [isRefresh, setIsRefresh] = useState(false);
+
+    useEffect(() => {
+
+        const validateLogin = async () => {
+
+            try {
+
+                const token = localStorage.getItem("token");
+
+                const currentAdminRequest = await axios.get(
+                    `http://localhost:8080/api/v1/auth/me`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                const currentAdminResponse = currentAdminRequest.data;
+
+                if (currentAdminResponse.status) {
+
+                    setAdmin(currentAdminResponse.data.currentUser);
+
+                }
+
+            } catch (err) {
+
+                setIsLoggedIn(false);
+
+            }
+
+        };
+
+        validateLogin();
+
+        setIsRefresh(false);
+
+    }, [isRefresh]);
+
+    /* ================ Get Current User ================ */
+
+
+    /* ================ Active Side Bar ================ */
+
     const [activeItem, setActiveItem] = useState(null);
     const location = useLocation();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const path = location.pathname;
@@ -37,10 +89,13 @@ const MySideBar = () => {
         navigate(path);
     };
 
-    return (
+    /* ================ Active Side Bar ================ */
+    
 
-        <Sidebar id='side-bar-content' style={{ height: '100vh', border: 'none' }}>
-            <Menu className='menu-content' style={{ height: '100vh', border: 'none', backgroundColor: '#FFFFFF' }}>
+    return isLoggedIn ? (
+
+        <Sidebar id='side-bar-content' style={{ height: '100%', border: 'none' }}>
+            <Menu className='menu-content' style={{ height: '100%', border: 'none', backgroundColor: '#FFFFFF' }}>
                 <MenuItem className="company-name">
                     <h1>SiCemar</h1>
                 </MenuItem>
@@ -53,16 +108,8 @@ const MySideBar = () => {
                         <span style={{ marginLeft: '6%' }}> Dashboard </span>
                     </div>
                 </MenuItem>
-                <MenuItem
-                    className={`add-data-content ${activeItem === 'addData' ? 'active' : ''}`}
-                    onClick={() => setActiveItem('addData')}
-                >
-                    <div className='d-flex align-items-center'>
-                        <Image className='icon' src={AddDataIcon} />
-                        <span style={{ marginLeft: '6%' }}> Tambah Sungai </span>
-                    </div>
-                </MenuItem>
-                <MenuItem
+                {admin.role === 'government' && (
+                    <MenuItem
                     className={`approval-data-content ${activeItem === 'approval' ? 'active' : ''}`}
                     onClick={() => handleClick('approval', '/approval')}
                 >
@@ -71,10 +118,11 @@ const MySideBar = () => {
                         <span style={{ marginLeft: '6%' }}> Approval </span>
                     </div>
                 </MenuItem>
+                )}
             </Menu>
         </Sidebar>
 
-    );
+    ) : (navigate('/login'));
 
 };
 

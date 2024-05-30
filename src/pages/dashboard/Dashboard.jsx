@@ -7,6 +7,7 @@ import {
 
 import DashboardLayout from "../../layouts/dashboard/DashboardLayout";
 import MapWrapped from "../../components/map/MapWrapped";
+import TableDashboard from "../../components/table/TableDashboard";
 
 import "../../assets/css/style.css";
 
@@ -30,6 +31,12 @@ const Dashboard = () => {
                             </div>
                         </Col>
                     </Row>
+                </Container>
+            </div>
+
+            <div id="table-dashboard-content">
+                <Container fluid style={{ padding: '0 4%' }}>
+                    <TableDashboard/>
                 </Container>
             </div>
 
