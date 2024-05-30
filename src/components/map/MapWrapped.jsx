@@ -138,10 +138,20 @@ const MapWrapped = () => {
                             </Row>
                             <Row className='p-0 m-0'>
                                 <Col xs={6} xl={6} className='p-0 mt-3'>
-                                    <p className='text-muted' style={{ margin: 'auto 0' }}>Kualitas Sungai</p>
+                                    <p className='text-muted' style={{ margin: 'auto 0', height: '100%', display: 'flex', alignItems: 'center'}}>Kualitas Sungai</p>
                                 </Col>
                                 <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
-                                    <p style={{ margin: 'auto 0' }}>{river.colorLevel}</p>
+                                    <p style={
+                                        { 
+                                            margin: 'auto 0',
+                                            color: river.quality < 90.2 || river.quality > 90.8 ? '#F44336' : '#4CAF50',
+                                            backgroundColor: river.quality < 90.2 || river.quality > 90.8 ? '#FFE9E7' : '#EAFBE9',
+                                            padding: '3% 5%',
+                                            borderRadius: '5px',
+                                        }}
+                                    >
+                                        {river.quality < 90.2 || river.quality > 90.8 ? 'Tercemar' : 'Tidak Tercemar'}
+                                    </p>
                                 </Col>
                             </Row>
                         </div>
