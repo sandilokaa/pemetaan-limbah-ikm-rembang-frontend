@@ -8,14 +8,18 @@ import {
     MapContainer,
     TileLayer,
     Popup,
-    Marker
+    Marker,
+    Tooltip
 } from 'react-leaflet';
 import L from 'leaflet';
 import axios from 'axios';
 
 import "leaflet/dist/leaflet.css";
 
-import iconUrl from "../../assets/images/icon/marker.png";
+import NormalBoundary from '../boundary/NormalBoundary';
+
+import pollutedIcon from "../../assets/images/icon/red-marker.png";
+import notPollutedIcon from "../../assets/images/icon/green-marker.png";
 
 const MapWrapped = () => {
 
@@ -32,8 +36,6 @@ const MapWrapped = () => {
             );
 
             const getDataResponse = await getDataRequest.data.data.getedAllRivers;
-
-            console.log(getDataResponse);
 
             setRiverData(getDataResponse);
 
@@ -55,110 +57,118 @@ const MapWrapped = () => {
 
     /* ================ Set Icon ================ */
 
-    const customIcon = L.icon({
-        iconUrl: iconUrl,
-        iconSize: [20, 25],
-        iconAnchor: [22, 38],
-        popupAnchor: [-3, -38]
-    });
+    const getCustomIcon = (quality) => {
+        return L.icon({
+            iconUrl: quality < 90.2 || quality > 90.8 ? pollutedIcon : notPollutedIcon,
+            iconSize: [20, 25],
+            iconAnchor: [22, 38],
+            popupAnchor: [-3, -38]
+        });
+    };
 
     /* ================ End Set Icon ================ */
 
     return (
 
-        <MapContainer
-            center={[-6.7036, 111.3416]}
-            zoom={11}
-            scrollWheelZoom={false}
-            style={
-                {
-                    height: '100%',
-                    width: '100%'
-                }
-            }
-        >
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {riverData.map((river) =>
-                <Marker
-                    key={river.id}
-                    position={
-                        [
-                            river.latitude,
-                            river.longitude
-                        ]
+        <>
+            <MapContainer
+                center={[-6.7036, 111.3416]}
+                zoom={11}
+                scrollWheelZoom={false}
+                style={
+                    {
+                        height: '100%',
+                        width: '100%'
                     }
-                    icon={customIcon}
-                >
-                    <Popup>
-                        <div style={{ width: '205px' }}>
-                            <Row className='p-0 m-0'>
-                                <Col xs={12} xl={12} className='p-0'>
-                                    <Image src={`http://localhost:8080/${river.picture}`} style={{ width: '100%', height: '120px', marginTop: '4%', borderRadius: '8px' }}/>
-                                </Col>
-                            </Row>
-                            <Row className='p-0 m-0' style={{ marginTop: '10%'}}>
-                                <Col xs={12} xl={12} className='p-0 mt-3'>
-                                    <p style={{ margin: 'auto 0', fontWeight: '600', fontSize: '16px' }}>{river.name}</p>
-                                </Col>
-                            </Row>
-                            <Row className='p-0 m-0'>
-                                <Col xs={6} xl={6} className='p-0 mt-3'>
-                                    <p className='text-muted' style={{ margin: 'auto 0' }}>PH</p>
-                                </Col>
-                                <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
-                                    <p style={{ margin: 'auto 0' }}>{river.ph}</p>
-                                </Col>
-                            </Row>
-                            <Row className='p-0 m-0'>
-                                <Col xs={6} xl={6} className='p-0 mt-3'>
-                                    <p className='text-muted' style={{ margin: 'auto 0' }}>BOD</p>
-                                </Col>
-                                <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
-                                    <p  style={{ margin: 'auto 0' }}>{river.bod} mg/L</p>
-                                </Col>
-                            </Row>
-                            <Row className='p-0 m-0'>
-                                <Col xs={6} xl={6} className='p-0 mt-3'>
-                                    <p className='text-muted' style={{ margin: 'auto 0' }}>COD</p>
-                                </Col>
-                                <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
-                                    <p style={{ margin: 'auto 0' }}>{river.cod} mg/L</p>
-                                </Col>
-                            </Row>
-                            <Row className='p-0 m-0'>
-                                <Col xs={6} xl={6} className='p-0 mt-3'>
-                                    <p className='text-muted' style={{ margin: 'auto 0' }}>Tingkat Warna</p>
-                                </Col>
-                                <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
-                                    <p style={{ margin: 'auto 0' }}>{river.colorLevel} TCU</p>
-                                </Col>
-                            </Row>
-                            <Row className='p-0 m-0'>
-                                <Col xs={6} xl={6} className='p-0 mt-3'>
-                                    <p className='text-muted' style={{ margin: 'auto 0', height: '100%', display: 'flex', alignItems: 'center'}}>Kualitas Sungai</p>
-                                </Col>
-                                <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
-                                    <p style={
-                                        { 
-                                            margin: 'auto 0',
-                                            color: river.quality < 90.2 || river.quality > 90.8 ? '#F44336' : '#4CAF50',
-                                            backgroundColor: river.quality < 90.2 || river.quality > 90.8 ? '#FFE9E7' : '#EAFBE9',
-                                            padding: '3% 5%',
-                                            borderRadius: '5px',
-                                        }}
-                                    >
-                                        {river.quality < 90.2 || river.quality > 90.8 ? 'Tercemar' : 'Tidak Tercemar'}
-                                    </p>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Popup>
-                </Marker>
-            )}
-        </MapContainer>
+                }
+            >
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {riverData.map((river) =>
+                    <Marker
+                        key={river.id}
+                        position={
+                            [
+                                river.latitude,
+                                river.longitude
+                            ]
+                        }
+                        icon={getCustomIcon(river.quality)}
+                    >
+                        <Tooltip direction="right" offset={[0, -25]} opacity={1}>{river.name}</Tooltip>
+                        <Popup>
+                            <div style={{ width: '205px' }}>
+                                <Row className='p-0 m-0'>
+                                    <Col xs={12} xl={12} className='p-0'>
+                                        <Image src={`http://localhost:8080/${river.picture}`} style={{ width: '100%', height: '120px', marginTop: '4%', borderRadius: '8px' }} />
+                                    </Col>
+                                </Row>
+                                <Row className='p-0 m-0' style={{ marginTop: '10%' }}>
+                                    <Col xs={12} xl={12} className='p-0 mt-3'>
+                                        <p style={{ margin: 'auto 0', fontWeight: '600', fontSize: '16px' }}>{river.name}</p>
+                                    </Col>
+                                </Row>
+                                <Row className='p-0 m-0'>
+                                    <Col xs={6} xl={6} className='p-0 mt-3'>
+                                        <p className='text-muted' style={{ margin: 'auto 0' }}>PH</p>
+                                    </Col>
+                                    <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
+                                        <p style={{ margin: 'auto 0' }}>{river.ph === "0" ? '-' : river.ph}</p>
+                                    </Col>
+                                </Row>
+                                <Row className='p-0 m-0'>
+                                    <Col xs={6} xl={6} className='p-0 mt-3'>
+                                        <p className='text-muted' style={{ margin: 'auto 0' }}>BOD</p>
+                                    </Col>
+                                    <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
+                                        <p style={{ margin: 'auto 0' }}>{river.bod === "0" ? '-' : river.bod} mg/L</p>
+                                    </Col>
+                                </Row>
+                                <Row className='p-0 m-0'>
+                                    <Col xs={6} xl={6} className='p-0 mt-3'>
+                                        <p className='text-muted' style={{ margin: 'auto 0' }}>COD</p>
+                                    </Col>
+                                    <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
+                                        <p style={{ margin: 'auto 0' }}>{river.cod === "0" ? '-' : river.cod} mg/L</p>
+                                    </Col>
+                                </Row>
+                                <Row className='p-0 m-0'>
+                                    <Col xs={6} xl={6} className='p-0 mt-3'>
+                                        <p className='text-muted' style={{ margin: 'auto 0' }}>Tingkat Warna</p>
+                                    </Col>
+                                    <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
+                                        <p style={{ margin: 'auto 0' }}>{river.colorLevel === "0" ? '-' : river.colorLevel} TCU</p>
+                                    </Col>
+                                </Row>
+                                <Row className='p-0 m-0'>
+                                    <Col xs={6} xl={6} className='p-0 mt-3'>
+                                        <p className='text-muted' style={{ margin: 'auto 0', height: '100%', display: 'flex', alignItems: 'center' }}>Kualitas Sungai</p>
+                                    </Col>
+                                    <Col xs={6} xl={6} className='d-flex justify-content-end p-0 mt-3'>
+                                        <p style={
+                                            {
+                                                margin: 'auto 0',
+                                                color: river.quality < 90.2 || river.quality > 90.8 ? '#F44336' : '#4CAF50',
+                                                backgroundColor: river.quality < 90.2 || river.quality > 90.8 ? '#FFE9E7' : '#EAFBE9',
+                                                padding: '3% 5%',
+                                                borderRadius: '5px',
+                                            }}
+                                        >
+                                            {river.quality < 90.2 || river.quality > 90.8 ? 'Tercemar' : 'Tidak Tercemar'}
+                                        </p>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Popup>
+                    </Marker>
+                )}
+            </MapContainer>
+
+            <NormalBoundary/>
+            
+        </>
 
     );
 };

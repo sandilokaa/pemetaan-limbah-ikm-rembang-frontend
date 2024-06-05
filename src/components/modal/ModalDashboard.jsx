@@ -36,17 +36,22 @@ const ModalDashboard = ({ showModal, closeModal, data }) => {
 
             const updatePayload = new FormData();
 
+            const phValue = phField.current.value === "-" ? 0 : parseFloat(phField.current.value) || 0;
+            const bodValue = bodField.current.value === "-" ? 0 : parseFloat(bodField.current.value) || 0;
+            const codValue = codField.current.value === "-" ? 0 : parseFloat(codField.current.value) || 0;
+            const colorLevelValue = colorLevelField.current.value === "-" ? 0 : parseFloat(colorLevelField.current.value) || 0;
+
             updatePayload.append('name', riverNameField.current.value);
-            updatePayload.append('ph', phField.current.value);
-            updatePayload.append('bod', bodField.current.value);
-            updatePayload.append('cod', codField.current.value);
-            updatePayload.append('colorLevel', colorLevelField.current.value);
-            updatePayload.append('quality', (
-                (parseFloat(bodField.current.value) * 0.40) + 
-                (parseFloat(codField.current.value) * 0.30) + 
-                (parseFloat(phField.current.value) * 0.20) + 
-                (parseFloat(colorLevelField.current.value) * 0.10)
-            ).toFixed(2));
+            updatePayload.append('bod', bodValue);
+            updatePayload.append('cod', codValue);
+            updatePayload.append('ph', phValue);
+            updatePayload.append('colorLevel', colorLevelValue);
+            updatePayload.append('quality', parseFloat((
+                (bodValue * 0.40) + 
+                (codValue * 0.30) + 
+                (phValue * 0.20) + 
+                (colorLevelValue * 0.10)
+            )).toFixed(2));
             if (selectedFile) {
                 updatePayload.append('picture', selectedFile);
             }
@@ -116,7 +121,6 @@ const ModalDashboard = ({ showModal, closeModal, data }) => {
                                             style={{ height: '56px' }}
                                             autoComplete="off"
                                             placeholder={data.ph}
-                                            defaultValue={data.ph}
                                             ref={phField}
                                         />
                                     </Form.Group>
@@ -131,7 +135,6 @@ const ModalDashboard = ({ showModal, closeModal, data }) => {
                                             style={{ height: '56px' }}
                                             autoComplete="off"
                                             placeholder={data.bod}
-                                            defaultValue={data.bod}
                                             ref={bodField}
                                         />
                                     </Form.Group>
@@ -148,7 +151,6 @@ const ModalDashboard = ({ showModal, closeModal, data }) => {
                                             style={{ height: '56px' }}
                                             autoComplete="off"
                                             placeholder={data.cod}
-                                            defaultValue={data.cod}
                                             ref={codField}
                                         />
                                     </Form.Group>
@@ -163,7 +165,6 @@ const ModalDashboard = ({ showModal, closeModal, data }) => {
                                             style={{ height: '56px' }}
                                             autoComplete="off"
                                             placeholder={data.colorLevel}
-                                            defaultValue={data.colorLevel}
                                             ref={colorLevelField}
                                         />
                                     </Form.Group>

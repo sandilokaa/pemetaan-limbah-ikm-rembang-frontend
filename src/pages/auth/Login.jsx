@@ -70,7 +70,21 @@ const LoginAdmin = () => {
             }
         } catch (err) {
 
-            enqueueSnackbar('Terdapat kesalahan', { variant: 'error', anchorOrigin: { vertical: 'top', horizontal: 'center' }, autoHideDuration: 2000 });
+            const errorMessage = err.response?.data?.message || 'Terdapat kesalahan';
+
+            if (err.response?.status === 401) {
+                enqueueSnackbar('Your email or password is incorrect!', { 
+                    variant: 'error', 
+                    anchorOrigin: { vertical: 'top', horizontal: 'center' }, 
+                    autoHideDuration: 2000 
+                });
+            } else {
+                enqueueSnackbar(errorMessage, { 
+                    variant: 'error', 
+                    anchorOrigin: { vertical: 'top', horizontal: 'center' }, 
+                    autoHideDuration: 2000 
+                });
+            }
 
         }
 

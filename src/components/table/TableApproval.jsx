@@ -9,6 +9,8 @@ import {
 import axios from "axios";
 import { useSnackbar } from 'notistack';
 
+import ModalDecline from "../modal/ModalDecline";
+
 import AcceptIcon from "../../assets/images/icon/accept.png";
 import DeclineIcon from "../../assets/images/icon/decline.png";
 
@@ -38,8 +40,6 @@ const TableApproval = () => {
             );
 
             const getDataResponse = await getDataRequest.data.data.getedAllDecisions;
-
-            console.log(getDataResponse);
 
             setDecisionData(getDataResponse);
 
@@ -120,6 +120,25 @@ const TableApproval = () => {
 
     /* ================ End Update Decision Data ================ */
 
+
+    /* ================ Open Modal ================ */
+
+    const [show, setShow] = useState(false);
+    const [selectedRiver, setSelectedRiver] = useState(null);
+
+    const handleClose = () => {
+        setShow(false);
+        setSelectedRiver(null)
+    };
+
+    const handleShow = (river) => {
+        setShow(true);
+        setSelectedRiver(river);
+    };
+
+    /* ================ Open Modal ================ */
+
+
     return (
 
         <Row>
@@ -141,10 +160,10 @@ const TableApproval = () => {
                             {currentItems.map((decision) =>
                                 <tr key={decision.id}>
                                     <td>{decision.River.name}</td>
-                                    <td>{decision.River.ph}</td>
-                                    <td>{decision.River.cod} mg/L</td>
-                                    <td>{decision.River.bod} mg/L</td>
-                                    <td>{decision.River.colorLevel} TCU</td>
+                                    <td>{decision.River.ph === "0" ? '-' : decision.River.ph}</td>
+                                    <td>{decision.River.bod === "0" ? '-' : decision.River.bod} mg/L</td>
+                                    <td>{decision.River.cod === "0" ? '-' : decision.River.cod} mg/L</td>
+                                    <td>{decision.River.colorLevel === "0" ? '-' : decision.River.colorLevel} TCU</td>
                                     <td>
                                         <span
                                             style={
@@ -161,7 +180,9 @@ const TableApproval = () => {
                                     </td>
                                     {decision.decision === 'approved' || decision.decision === 'not approved' ?
                                         (
-                                            <td className="text-muted">Has been approved.</td>
+                                            <td className="text-muted">
+                                                {decision.decision === 'approved' ? 'Has been approved' : decision.decision === 'not approved' ? 'Not yet approved' : null}
+                                            </td>
                                         ) : (
                                             <td>
                                                 <Row>
@@ -176,7 +197,7 @@ const TableApproval = () => {
                                                         <Image
                                                             src={DeclineIcon}
                                                             style={{ cursor: 'pointer' }}
-                                                            onClick={() => handleDecisionUpdate(decision.id, 'not approved')}
+                                                            onClick={() => handleShow(decision.id)}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -200,6 +221,11 @@ const TableApproval = () => {
                     </Pagination>
                 </div>
             </Col>
+            <ModalDecline
+                showModal={show}
+                closeModal={handleClose}
+                data={selectedRiver}
+            />
         </Row>
 
     );

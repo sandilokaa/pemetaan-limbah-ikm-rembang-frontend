@@ -154,10 +154,10 @@ const TableDashboard = () => {
                             {currentItems.map((river) =>
                                 <tr key={river.id}>
                                     <td>{river.name}</td>
-                                    <td>{river.ph}</td>
-                                    <td>{river.cod} mg/L</td>
-                                    <td>{river.bod} mg/L</td>
-                                    <td>{river.colorLevel} TCU</td>
+                                    <td>{river.ph === "0" ? '-' : river.ph}</td>
+                                    <td>{river.bod === "0" ? '-' : river.bod} mg/L</td>
+                                    <td>{river.cod === "0" ? '-' : river.cod} mg/L</td>
+                                    <td>{river.colorLevel === "0" ? '-' : river.colorLevel} TCU</td>
                                     <td>
                                         <span
                                             style={

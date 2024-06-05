@@ -36,7 +36,6 @@ const NavbarGeneral = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link onClick={() => window.location.href = '/'} className={scrolled ? "nav-link-scrolled" : "nav-link"}>Home</Nav.Link>
-                        <Nav.Link className={scrolled ? "nav-link-scrolled" : "nav-link"}>Tentang Kami</Nav.Link>
                     </Nav>
                     <Button className={scrolled ? "btn-auth-scrolled" : "btn-auth"} onClick={() => window.location.href = '/login'}>Masuk</Button>
                 </Navbar.Collapse>

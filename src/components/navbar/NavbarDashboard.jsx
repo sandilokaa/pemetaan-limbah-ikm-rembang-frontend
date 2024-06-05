@@ -93,7 +93,7 @@ const NavbarDashboard = () => {
                 <Col xs={12} xl={12} className="d-flex justify-content-end">
                     <div className="d-flex align-items-center" style={{zIndex: '999'}}>
                         <Image src={AvatarProfile} style={{ marginRight: '10px', maxWidth: '50px' }} />
-                        <span style={{ maxWidth: 'calc(100% - 60px)', color: '#FFFFFF', marginRight: '10px' }}>{admin ? admin.name : null}</span>
+                        <span style={{ maxWidth: 'calc(100% - 60px)', color: '#FFFFFF', marginRight: '10px' }}>{admin.name === "pemerintahrembang" ? "Pemerintah Rembang" : admin.name === "IKMrembang" ? "IKM Rembang" : null}</span>
                         <Image
                             src={ArrowDownIcon}
                             style={{ maxWidth: 'calc(100% - 60px)', cursor: 'pointer' }}
@@ -111,24 +111,6 @@ const NavbarDashboard = () => {
                                 padding: '10px',
                                 borderRadius: '4px'
                             }}>
-                                <div
-                                    style={{
-                                        padding: '10px',
-                                        cursor: 'pointer',
-                                        borderBottom: '1px solid #ddd'
-                                    }}
-                                >
-                                    Profile
-                                </div>
-                                <div
-                                    style={{
-                                        padding: '10px',
-                                        cursor: 'pointer',
-                                        borderBottom: '1px solid #ddd'
-                                    }}
-                                >
-                                    Setting
-                                </div>
                                 <div
                                     style={{
                                         padding: '10px',

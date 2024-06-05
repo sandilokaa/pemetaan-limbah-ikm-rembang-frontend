@@ -10242,6 +10242,7 @@ __metadata:
     react-router-dom: ^6.23.1
     react-scripts: 5.0.1
     styled-components: ^6.1.11
+    swiper: ^11.1.4
     web-vitals: ^2.1.0
   languageName: unknown
   linkType: soft
@@ -12980,6 +12981,13 @@ __metadata:
   bin:
     svgo: bin/svgo
   checksum: b92f71a8541468ffd0b81b8cdb36b1e242eea320bf3c1a9b2c8809945853e9d8c80c19744267eb91cabf06ae9d5fff3592d677df85a31be4ed59ff78534fa420
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.4":
+  version: 11.1.4
+  resolution: "swiper@npm:11.1.4"
+  checksum: 386ea824ae8ab3b1992c54f02c8593068c96203feb9da4c23e165a7277a539de7bba6f9d40adc068268ff06314443ca714d75348f5b20039e43b022f62e65f67
   languageName: node
   linkType: hard
 

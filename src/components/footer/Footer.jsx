@@ -11,16 +11,17 @@ const FooterGeneral = () => {
 
     return (
 
-        <div id="footer">
-            <Container>
-                <Row>
+        <div id="footer" style={{background: '#FFFFFF'}}>
+            <Container fluid style={{ padding: '0 4%' }}>
+                <Row style={{padding: '1% 0'}}>
                     <Col xs={12} xl={12} className="d-flex justify-content-center">
-                        <p>Tim Keyozz © 2024</p>
+                        <div className="d-flex align-items-center">
+                            <span>Tim Keyozz © 2024</span>
+                        </div>
                     </Col>
                 </Row>
             </Container>
         </div>
-
     );
 
 };

@@ -8,6 +8,7 @@ import {
 
 import HomeLayout from "../../layouts/home/HomeLayout";
 import MapWrapped from "../../components/map/MapWrapped";
+import RiverSwiper from "../../components/swiper/riverSwiper";
 
 import "../../assets/css/style.css";
 import "../../assets/css/responsive.css";
@@ -41,11 +42,15 @@ const Home = () => {
                 </Container>
             </div>
 
+            <div id="river-swiper-content">
+                <RiverSwiper/>
+            </div>
+
             <div id="map-content">
                 <Container>
                     <Row>
                         <Col xs={12} xl={12}>
-                            <h1>Daftar Sungai Tercemar</h1>
+                            <h1>Pemetaan Lokasi Sungai Tercemar</h1>
                         </Col>
                     </Row>
                     <Row>
