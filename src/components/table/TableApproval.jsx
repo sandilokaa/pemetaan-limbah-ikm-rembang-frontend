@@ -7,6 +7,7 @@ import {
     Image
 } from "react-bootstrap";
 import axios from "axios";
+import moment from "moment-timezone";
 import { useSnackbar } from 'notistack';
 
 import ModalDecline from "../modal/ModalDecline";
@@ -139,6 +140,16 @@ const TableApproval = () => {
     /* ================ Open Modal ================ */
 
 
+    /* ================ Format Date ================ */
+
+    const formatDate = (dateString) => {
+        const date = moment(dateString).tz('Asia/Jakarta');
+        return date.format('D.M.YYYY HH:mm');
+    };
+
+    /* ================ End Format Date ================ */
+
+
     return (
 
         <Row>
@@ -153,6 +164,7 @@ const TableApproval = () => {
                                 <th>COD</th>
                                 <th>Warna</th>
                                 <th>Kualitas</th>
+                                <th>Last Edit</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -177,6 +189,9 @@ const TableApproval = () => {
                                         >
                                             {decision.River.quality < 90.2 || decision.River.quality > 90.8 ? 'Tercemar' : 'Tidak Tercemar'}
                                         </span>
+                                    </td>
+                                    <td>
+                                        {formatDate(decision.updatedAt)}
                                     </td>
                                     {decision.decision === 'approved' || decision.decision === 'not approved' ?
                                         (

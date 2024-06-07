@@ -7,6 +7,7 @@ import {
     Image
 } from "react-bootstrap";
 import axios from "axios";
+import moment from "moment-timezone";
 
 import EditIcon from "../../assets/images/icon/edit-icon.png";
 import ModalDashboard from "../modal/ModalDashboard";
@@ -130,12 +131,22 @@ const TableDashboard = () => {
 
     /* ================ Open Modal ================ */
 
+
+    /* ================ Format Date ================ */
+
+    const formatDate = (dateString) => {
+        const date = moment(dateString).tz('Asia/Jakarta');
+        return date.format('D.M.YYYY HH:mm');
+    };
+
+    /* ================ End Format Date ================ */
+
     return (
 
         <Row>
             <Col xs={12} xl={12}>
                 <div style={{ padding: '2%', backgroundColor: '#FFFFFF', borderRadius: '8px' }}>
-                    <Table style={{ margin: 'auto 0' }}>
+                    <Table style={{ margin: 'auto 0' }} responsive>
                         <thead className="table-header">
                             <tr>
                                 <th>Nama Sungai</th>
@@ -145,6 +156,7 @@ const TableDashboard = () => {
                                 <th>Warna</th>
                                 <th>Kualitas</th>
                                 <th>Approval</th>
+                                <th>Last Edit</th>
                                 {admin.role === 'smes' && (
                                     <th>Action</th>
                                 )}
@@ -180,6 +192,7 @@ const TableDashboard = () => {
                                             null
                                         } 
                                     </td>
+                                    <td>{formatDate(river.updatedAt)}</td>
                                     {admin.role === 'smes' && (
                                         <td>
                                             <Image

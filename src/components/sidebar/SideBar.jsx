@@ -90,16 +90,14 @@ const MySideBar = () => {
     };
 
     /* ================ Active Side Bar ================ */
-    
+
 
     return isLoggedIn ? (
 
         <Sidebar id='side-bar-content' style={{ height: '100%', border: 'none' }}>
-            <Menu className='menu-content' style={{ height: '100%', border: 'none', backgroundColor: '#FFFFFF' }}>
-                <MenuItem className="company-name">
-                    <h1>SiCemar</h1>
-                </MenuItem>
-                <MenuItem 
+            <Menu className='menu-content p-3' style={{ height: '100%', border: 'none', backgroundColor: '#FFFFFF' }}>
+                <h1>SiCemar</h1>
+                <MenuItem
                     className={`dashboard-content ${activeItem === 'dashboard' ? 'active' : ''}`}
                     onClick={() => handleClick('dashboard', '/dashboard')}
                 >
@@ -110,14 +108,14 @@ const MySideBar = () => {
                 </MenuItem>
                 {admin.role === 'government' && (
                     <MenuItem
-                    className={`approval-data-content ${activeItem === 'approval' ? 'active' : ''}`}
-                    onClick={() => handleClick('approval', '/approval')}
-                >
-                    <div className='d-flex align-items-center'>
-                        <Image className='icon' src={AprovalIcon} />
-                        <span style={{ marginLeft: '6%' }}> Approval </span>
-                    </div>
-                </MenuItem>
+                        className={`approval-data-content ${activeItem === 'approval' ? 'active' : ''}`}
+                        onClick={() => handleClick('approval', '/approval')}
+                    >
+                        <div className='d-flex align-items-center'>
+                            <Image className='icon' src={AprovalIcon} />
+                            <span style={{ marginLeft: '6%' }}> Approval </span>
+                        </div>
+                    </MenuItem>
                 )}
             </Menu>
         </Sidebar>

@@ -17,7 +17,7 @@ const ModalDecline = ({ showModal, closeModal, data }) => {
 
     console.log(data);
 
-    const nameField = useRef();
+    const governmentNameField = useRef();
     const informationField = useRef();
 
     const onUpdateDecision = async () => {
@@ -27,7 +27,7 @@ const ModalDecline = ({ showModal, closeModal, data }) => {
             const token = localStorage.getItem("token");
 
             const decisionPayload = {
-                name: nameField.current.value,
+                governmentName: governmentNameField.current.value,
                 information: informationField.current.value,
                 decision: 'not approved'
             }
@@ -77,7 +77,7 @@ const ModalDecline = ({ showModal, closeModal, data }) => {
                                     type="text"
                                     style={{ height: '56px' }}
                                     autoComplete="off"
-                                    ref={nameField}
+                                    ref={governmentNameField}
                                 />
                             </Form.Group>
                         </Form>
