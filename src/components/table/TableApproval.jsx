@@ -155,7 +155,7 @@ const TableApproval = () => {
         <Row>
             <Col xs={12} xl={12}>
                 <div style={{ padding: '2%', backgroundColor: '#FFFFFF', borderRadius: '8px' }}>
-                    <Table style={{ margin: 'auto 0' }}>
+                    <Table style={{ margin: 'auto 0', fontSize: '13px' }}>
                         <thead className="table-header">
                             <tr>
                                 <th>Nama Sungai</th>

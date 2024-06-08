@@ -11,6 +11,8 @@ import moment from "moment-timezone";
 
 import EditIcon from "../../assets/images/icon/edit-icon.png";
 import ModalDashboard from "../modal/ModalDashboard";
+import ModalNote from "../modal/ModalNote";
+import RevisionIcon from "../../assets/images/icon/revision.png";
 
 import "../../assets/css/style.css";
 
@@ -114,7 +116,7 @@ const TableDashboard = () => {
     /* ================ Pagination ================ */
 
 
-    /* ================ Open Modal ================ */
+    /* ================ Open Modal Edit ================ */
 
     const [show, setShow] = useState(false);
     const [selectedRiver, setSelectedRiver] = useState(null);
@@ -129,7 +131,25 @@ const TableDashboard = () => {
         setSelectedRiver(river);
     }
 
-    /* ================ Open Modal ================ */
+    /* ================ End Open Modal Edit ================ */
+
+
+    /* ================ Open Modal Edit ================ */
+
+    const [showModalRevision, setShowModalRevision] = useState(false);
+    const [selectedRevision, setSelectedRevision] = useState(null);
+
+    const handleCloseRevision = () => {
+        setShowModalRevision(false);
+        setSelectedRevision(null)
+    }
+
+    const handleShowRevision = (river) => {
+        setShowModalRevision(true);
+        setSelectedRevision(river);
+    }
+
+    /* ================ End Open Modal Edit ================ */
 
 
     /* ================ Format Date ================ */
@@ -146,7 +166,7 @@ const TableDashboard = () => {
         <Row>
             <Col xs={12} xl={12}>
                 <div style={{ padding: '2%', backgroundColor: '#FFFFFF', borderRadius: '8px' }}>
-                    <Table style={{ margin: 'auto 0' }} responsive>
+                    <Table style={{ margin: 'auto 0', fontSize: '13px' }} responsive>
                         <thead className="table-header">
                             <tr>
                                 <th>Nama Sungai</th>
@@ -187,12 +207,22 @@ const TableDashboard = () => {
                                     <td> 
                                         {
                                             river.Decision.decision === "approved" ? 'Approved' : 
-                                            river.Decision.decision === "not approved" ? 'Revision' : 
+                                            river.Decision.decision === "not approved" ? 
+                                            ( 
+                                                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                                    Revision 
+                                                    <Image 
+                                                        src={RevisionIcon} 
+                                                        style={{marginLeft: '4%', cursor: 'pointer'}}
+                                                        onClick={() => handleShowRevision(river)}
+                                                    />
+                                                </div> 
+                                            ) : 
                                             river.Decision.decision === "under review" ? 'Under Review' :
                                             null
                                         } 
                                     </td>
-                                    <td>{formatDate(river.updatedAt)}</td>
+                                    <td>{formatDate(river.Decision.updatedAt)}</td>
                                     {admin.role === 'smes' && (
                                         <td>
                                             <Image
@@ -223,6 +253,11 @@ const TableDashboard = () => {
                 showModal={show}
                 closeModal={handleClose}
                 data={selectedRiver}
+            />
+            <ModalNote
+                showModal={showModalRevision}
+                closeModal={handleCloseRevision}
+                data={selectedRevision}
             />
         </Row>
 
