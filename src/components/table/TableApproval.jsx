@@ -4,11 +4,13 @@ import {
     Col,
     Table,
     Pagination,
-    Image
+    Image,
+    Button
 } from "react-bootstrap";
 import axios from "axios";
 import moment from "moment-timezone";
 import { useSnackbar } from 'notistack';
+import fileDownload from 'js-file-download';
 
 import ModalDecline from "../modal/ModalDecline";
 
@@ -18,7 +20,6 @@ import DeclineIcon from "../../assets/images/icon/decline.png";
 import "../../assets/css/style.css";
 
 const TableApproval = () => {
-
 
     /* ================ Get Decision Data ================ */
 
@@ -93,12 +94,12 @@ const TableApproval = () => {
                 `http://localhost:8080/api/v1/decisions/${id}`,
                 {
                     decision: newDecision
-                } , {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Access-Control-Allow-Origin": "*"
-                    },
-                }
+                }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Access-Control-Allow-Origin": "*"
+                },
+            }
             );
 
             const updateResponse = updateRequest.data;
@@ -106,15 +107,15 @@ const TableApproval = () => {
             enqueueSnackbar(updateResponse.message, { variant: 'success', anchorOrigin: { vertical: 'top', horizontal: 'center' }, autoHideDuration: 5000 });
 
             if (updateResponse.status) {
-                
+
                 window.location.reload("/approval")
 
             }
-            
+
         } catch (err) {
 
             enqueueSnackbar(err.message, { variant: 'error', anchorOrigin: { vertical: 'top', horizontal: 'center' }, autoHideDuration: 5000 });
-            
+
         }
 
     };
@@ -144,10 +145,31 @@ const TableApproval = () => {
 
     const formatDate = (dateString) => {
         const date = moment(dateString).tz('Asia/Jakarta');
-        return date.format('D.M.YYYY HH:mm');
+        return date.format('D-M-YYYY HH:mm');
     };
 
     /* ================ End Format Date ================ */
+
+
+    /* ================ Download File ================ */
+
+    const handleDownload = (url, filename) => {
+        const token = localStorage.getItem('token');
+        axios.get(url, {
+            responseType: 'blob',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((res) => {
+                fileDownload(res.data, filename);
+            })
+            .catch((err) => {
+                console.error('Error downloading file:', err);
+            });
+    };
+
+    /* ================ End Download File ================ */
 
 
     return (
@@ -164,6 +186,7 @@ const TableApproval = () => {
                                 <th>COD</th>
                                 <th>Warna</th>
                                 <th>Kualitas</th>
+                                <th>File Validasi</th>
                                 <th>Last Edit</th>
                                 <th>Action</th>
                             </tr>
@@ -191,6 +214,41 @@ const TableApproval = () => {
                                         </span>
                                     </td>
                                     <td>
+                                        {decision.River.validationFile !== null ? (
+                                            <div style={{ display: "flex", gap: '10px'}}>
+                                                <Button
+                                                    onClick={() => window.open(`http://localhost:8080/${decision.River.validationFile}`)}
+                                                    target="_blank"
+                                                    style={{
+                                                        border: 'none',
+                                                        color: '#FFFFFF',
+                                                        backgroundColor: '#338FFA',
+                                                        cursor: 'pointer',
+                                                        borderRadius: '5px',
+                                                        fontSize: '13px',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    Review
+                                                </Button>
+                                                <Button
+                                                    onClick={() => handleDownload(`http://localhost:8080/${decision.River.validationFile}`, decision.River.validationFile)}
+                                                    style={{
+                                                        color: '#FFFFFF',
+                                                        backgroundColor: '#B4B4B8',
+                                                        cursor: 'pointer',
+                                                        borderRadius: '5px',
+                                                        border: 'none',
+                                                        fontSize: '13px',
+                                                        width: '100%',
+                                                    }}
+                                                >
+                                                    Download
+                                                </Button>
+                                            </div>
+                                        ) : "-"}
+                                    </td>
+                                    <td>
                                         {formatDate(decision.updatedAt)}
                                     </td>
                                     {decision.decision === 'approved' || decision.decision === 'not approved' ?
@@ -201,7 +259,7 @@ const TableApproval = () => {
                                         ) : (
                                             <td>
                                                 <Row>
-                                                    <Col xs={12} xl={{span: 4, offset: 2}} className="d-flex justify-content-end">
+                                                    <Col xs={12} xl={{ span: 4, offset: 2 }} className="d-flex justify-content-end">
                                                         <Image
                                                             src={AcceptIcon}
                                                             style={{ cursor: 'pointer' }}

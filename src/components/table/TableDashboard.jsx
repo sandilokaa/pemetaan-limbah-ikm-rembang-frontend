@@ -4,7 +4,8 @@ import {
     Col,
     Table,
     Pagination,
-    Image
+    Image,
+    Button
 } from "react-bootstrap";
 import axios from "axios";
 import moment from "moment-timezone";
@@ -156,7 +157,7 @@ const TableDashboard = () => {
 
     const formatDate = (dateString) => {
         const date = moment(dateString).tz('Asia/Jakarta');
-        return date.format('D.M.YYYY HH:mm');
+        return date.format('D-M-YYYY HH:mm');
     };
 
     /* ================ End Format Date ================ */
@@ -176,6 +177,9 @@ const TableDashboard = () => {
                                 <th>Warna</th>
                                 <th>Kualitas</th>
                                 <th>Approval</th>
+                                {admin.role === 'smes' && (
+                                    <th>File Validasi</th>
+                                )}
                                 <th>Last Edit</th>
                                 {admin.role === 'smes' && (
                                     <th>Action</th>
@@ -204,24 +208,49 @@ const TableDashboard = () => {
                                             {river.quality < 90.2 || river.quality > 90.8 ? 'Tercemar' : 'Tidak Tercemar'}
                                         </span>
                                     </td>
-                                    <td> 
+                                    <td>
                                         {
-                                            river.Decision.decision === "approved" ? 'Approved' : 
-                                            river.Decision.decision === "not approved" ? 
-                                            ( 
-                                                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                                    Revision 
-                                                    <Image 
-                                                        src={RevisionIcon} 
-                                                        style={{marginLeft: '4%', cursor: 'pointer'}}
-                                                        onClick={() => handleShowRevision(river)}
-                                                    />
-                                                </div> 
-                                            ) : 
-                                            river.Decision.decision === "under review" ? 'Under Review' :
-                                            null
-                                        } 
+                                            river.Decision.decision === "approved" ? 'Approved' :
+                                                river.Decision.decision === "not approved" ?
+                                                    (
+                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                            Revision
+                                                            <Image
+                                                                src={RevisionIcon}
+                                                                style={{ marginLeft: '4%', cursor: 'pointer' }}
+                                                                onClick={() => handleShowRevision(river)}
+                                                            />
+                                                        </div>
+                                                    ) :
+                                                    river.Decision.decision === "under review" ? 'Under Review' :
+                                                        null
+                                        }
                                     </td>
+                                    {admin.role === 'smes' && (
+                                        <td>
+                                            {
+                                                river.validationFile !== null ? (
+                                                    <div>
+                                                        <Button
+                                                            onClick={() => window.open(`http://localhost:8080/${river.validationFile}`)}
+                                                            target="_blank"
+                                                            style={{
+                                                                border: 'none',
+                                                                color: '#FFFFFF',
+                                                                backgroundColor: '#338FFA',
+                                                                cursor: 'pointer',
+                                                                borderRadius: '5px',
+                                                                marginRight: '4%',
+                                                                fontSize: '13px'
+                                                            }}
+                                                        >
+                                                            Review
+                                                        </Button>
+                                                    </div>
+                                                ) : "-"
+                                            }
+                                        </td>
+                                    )}
                                     <td>{formatDate(river.Decision.updatedAt)}</td>
                                     {admin.role === 'smes' && (
                                         <td>

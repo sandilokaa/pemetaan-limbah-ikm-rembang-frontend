@@ -71,7 +71,7 @@ const RiverSwiper = () => {
                                 return (
                                     <Col xs={12} xl={2} key={river.id}>
                                         <SwiperSlide>
-                                            <Card style={{ height: '100%', border: 'none' }}>
+                                            <Card style={{ height: '100%' }}>
                                                 <Card.Body>
                                                     <Card.Title
                                                         style={{ fontSize: '14px', fontWeight: '600' }}
@@ -105,7 +105,7 @@ const RiverSwiper = () => {
                                                                 <p className="text-muted">PH</p>
                                                             </Col>
                                                             <Col xs={4} xl={4} className="d-flex justify-content-end">
-                                                                <p style={{fontWeight: '600'}}>{river.ph}</p>
+                                                                <p style={{fontWeight: '600'}}>{river.ph === "0" ? '-' : river.ph}</p>
                                                             </Col>
                                                         </Row>
                                                         <Row>
@@ -113,7 +113,7 @@ const RiverSwiper = () => {
                                                                 <p className="text-muted">BOD</p>
                                                             </Col>
                                                             <Col xs={4} xl={4} className="d-flex justify-content-end">
-                                                                <p style={{fontWeight: '600'}}>{river.bod}</p>
+                                                                <p style={{fontWeight: '600'}}>{river.bod === "0" ? '-' : river.bod}</p>
                                                             </Col>
                                                         </Row>
                                                         <Row>
@@ -121,7 +121,7 @@ const RiverSwiper = () => {
                                                                 <p className="text-muted">COD</p>
                                                             </Col>
                                                             <Col xs={4} xl={4} className="d-flex justify-content-end">
-                                                                <p style={{fontWeight: '600'}}>{river.cod}</p>
+                                                                <p style={{fontWeight: '600'}}>{river.cod === "0" ? '-' : river.cod}</p>
                                                             </Col>
                                                         </Row>
                                                         <Row>
@@ -129,7 +129,7 @@ const RiverSwiper = () => {
                                                                 <p className="text-muted">Warna Sungai</p>
                                                             </Col>
                                                             <Col xs={4} xl={4} className="d-flex justify-content-end">
-                                                                <p style={{fontWeight: '600'}}>{river.colorLevel}</p>
+                                                                <p style={{fontWeight: '600'}}>{river.colorLevel === "0" ? '-' : river.colorLevel}</p>
                                                             </Col>
                                                         </Row>
                                                     </Card.Text>

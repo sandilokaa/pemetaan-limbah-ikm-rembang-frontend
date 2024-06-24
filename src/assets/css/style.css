@@ -335,22 +335,22 @@ body, html {
     .table-header{
         border: none;
     }
-
-    .table-header th:nth-child(1){
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
-    }
-    
-    .table-header th:nth-child(9){
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
-    }
     
     .table-header th {
         background-color: #338FFA;
         padding: 2%;
         color: var(--font-color-white);
         text-align: center;
+    }
+    
+    .table-header th:first-child{
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+    
+    .table-header th:last-child{
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
     }
 
     .table-body td {
@@ -368,5 +368,53 @@ body, html {
 }
 
 /* ------ End Dashboard Content ------*/
+
+/* ============================================ */
+
+
+/* ============================================ */
+
+/* ------ Approval Content ------*/
+
+#table-approval-content{
+    margin-top: 4%;
+    margin-bottom: 4%;
+
+    .table-header{
+        border: none;
+    }
+    
+    .table-header th {
+        background-color: #338FFA;
+        padding: 2%;
+        color: var(--font-color-white);
+        text-align: center;
+    }
+
+    .table-header th:first-child{
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+    
+    .table-header th:last-child{
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }  
+
+    .table-body td {
+        padding: 20px;
+        text-align: center;
+        border: none;
+        vertical-align: middle;
+    }
+    
+    .custom-pagination .page-item.active .page-link {
+        background-color: #338FFA; 
+        border-color: #338FFA; 
+        color: #fff;
+    }
+}
+
+/* ------ End Approval Content ------*/
 
 /* ============================================ */

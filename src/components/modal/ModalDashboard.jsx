@@ -18,6 +18,7 @@ const ModalDashboard = ({ showModal, closeModal, data }) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedValidationFile, setSelectedValidationFile] = useState(null);
     const riverNameField = useRef();
     const phField = useRef();
     const bodField = useRef();
@@ -26,6 +27,10 @@ const ModalDashboard = ({ showModal, closeModal, data }) => {
 
     const handleFilePicture = (event) => {
         setSelectedFile(event.target.files[0]);
+    };
+    
+    const handleValidationFile = (event) => {
+        setSelectedValidationFile(event.target.files[0]);
     };
 
     const onUpdateRiver = async () => {
@@ -54,6 +59,9 @@ const ModalDashboard = ({ showModal, closeModal, data }) => {
             )).toFixed(2));
             if (selectedFile) {
                 updatePayload.append('picture', selectedFile);
+            }
+            if (selectedValidationFile) {
+                updatePayload.append('validationFile', selectedValidationFile);
             }
 
             const updateRequest = await axios.put(
@@ -180,6 +188,20 @@ const ModalDashboard = ({ showModal, closeModal, data }) => {
                                             type="file"
                                             autoComplete="off"
                                             onChange={handleFilePicture}
+                                        />
+                                    </Form.Group>
+                                </Form>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={12} xl={12}>
+                                <Form className="form-login">
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+                                        <Form.Label style={{ fontWeight: '600' }}>File Validasi</Form.Label>
+                                        <Form.Control
+                                            type="file"
+                                            autoComplete="off"
+                                            onChange={handleValidationFile}
                                         />
                                     </Form.Group>
                                 </Form>

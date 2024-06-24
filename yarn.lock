@@ -8854,6 +8854,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-file-download@npm:^0.4.12":
+  version: 0.4.12
+  resolution: "js-file-download@npm:0.4.12"
+  checksum: a03847eef0184fbf34a7b7fd365ea6aa1a6cc142efeac52c4baa0cdde845dc93718eb66808dfcffd6c91b37ddc9d058d352ac9698b4280744bad3587240c93b6
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -10247,6 +10254,7 @@ __metadata:
     "@testing-library/user-event": ^13.2.1
     axios: ^1.7.2
     bootstrap: ^5.3.3
+    js-file-download: ^0.4.12
     leaflet: 1.9.3
     moment-timezone: ^0.5.45
     notistack: ^3.0.1

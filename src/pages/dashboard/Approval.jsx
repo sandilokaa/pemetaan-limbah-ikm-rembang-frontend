@@ -34,7 +34,7 @@ const Approval = () => {
                 </Container>
             </div>
 
-            <div id="table-dashboard-content">
+            <div id="table-approval-content">
                 <Container fluid style={{ padding: '0 4%' }}>
                     <TableApproval/>
                 </Container>
